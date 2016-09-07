@@ -42,6 +42,11 @@ paths:
           description: Password
           required: false
           type: string
+        - name: session_key
+          in: query
+          description: session_key
+          required: false
+          type: string
       tags:
         - Authentication
       responses:
@@ -162,6 +167,8 @@ definitions:
     properties:
       response:
         type: boolean
+      token:
+        type: string
   Credentials:
     type: object
     required:
