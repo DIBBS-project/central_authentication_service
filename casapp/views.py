@@ -1,13 +1,11 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-from django.shortcuts import redirect
-
-import re
 import json
 import uuid
 
-from django.template import RequestContext
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 
 LOCAL_REDIRECT_SESSION_DICT = {}
 LOCAL_USER_SESSION_DICT = {}
@@ -52,17 +50,6 @@ def index(request, auth_token=None):
 
     if request.user.username != "anonymous" and uuid_session not in LOCAL_USER_SESSION_DICT:
         LOCAL_USER_SESSION_DICT[uuid_session] = request.user
-
-    # # Extract the redirect URL if it exists
-    # if "HTTP_REFERER" in request.META:
-    #     if request.META["HTTP_HOST"] not in request.META["HTTP_REFERER"]:
-    #         redirect_url = request.META["HTTP_REFERER"]
-    #
-    #     if "service=http" in request.META["HTTP_REFERER"]:
-    #         m = re.search("service=http.*", request.META["HTTP_REFERER"])
-    #         redirect_url = m.group(0)
-    #         redirect_url = redirect_url.replace("service=", "")
-    #         print(redirect_url)
 
     if "redirect_url" in request.POST:
         redirect_url = request.POST["redirect_url"]
