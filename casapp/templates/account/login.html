@@ -6,84 +6,124 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-    <div class="form-signin">
+    <style>
+        .frame {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-signin {
+            max-width: 100%;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+    </style>
+    <div class="well well-lg frame">
         <h1>{% trans "Sign In" %}</h1>
+        <hr/>
 
-        {% get_providers as socialaccount_providers %}
-
-        {% if socialaccount_providers %}
+        <div class="form-signin">
             <p>{% blocktrans with site.name as site_name %}Please sign in with one
                 of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
                 for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+            <!-- Columns are always 50% wide, on mobile and desktop -->
+            <div class="row">
+                <div class="login_using_your_account">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Using your account</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="login form-signin" method="POST" action="{% url 'account_login' %}">
+                                {% csrf_token %}
+                                {{ form.media }}
+                                {% if form.errors %}
+                                    <div class="alert alert-error">
+                                        <ul>
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
 
-            <div class="socialaccount_ballot">
+                                <table style="width: 100%;">
+                                    {% for field in form.visible_fields %}
+                                        <tr>
+                                            <td style="text-align: right; padding: 5px;"><label class="control-label">
+                                                {{ field.label }}{% if field.field.required %} *{% endif %}</label></td>
+                                            <td style="text-align: left; padding: 5px;">
+                                                <div class="controls">
+                                                    {{ field }}
+                                                    {% if field.errors %}
+                                                        <span class="help-inline">{{ field.errors.as_text }}</span>{% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
 
-                <ul class="socialaccount_providers">
-                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-                </ul>
+                                {% for field in form.hidden_fields %}
+                                    {{ field }}
+                                {% endfor %}
 
-                <div class="login-or">{% trans 'or' %}</div>
+                                {% block formsets %}
+                                    {% for formset in inlines %}
+                                        {% include "inline_formset.html" with formset=formset %}
+                                    {% endfor %}
+                                {% endblock formsets %}
+                                {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}"
+                                           value="{{ redirect_field_value }}"/>
+                                {% endif %}
 
-            </div>
+                                <div class="form-actions" style="text-align: center;">
+                                    <input class="btn btn-primary" type="submit" value="Submit"/>
+                                    {% block extra_buttons %}
+                                    {% endblock extra_buttons %}
+                                </div>
+                                <br/>
+                                <a class="button secondaryAction"
+                                   href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                                <br/>
+                            </form>
+                        </div>
+                    </div>
 
-            {% include "socialaccount/snippets/login_extra.html" %}
-
-        {% else %}
-            <p>{% blocktrans %}If you have not created an account yet, then please
-                <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-        {% endif %}
-
-        <form class="login form-signin" method="POST" action="{% url 'account_login' %}">
-            {% csrf_token %}
-            {{ form.media }}
-            {% if form.errors %}
-                <div class="alert alert-error">
-                    <ul>
-                        {% for error in form.non_field_errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
                 </div>
-            {% endif %}
+                <div class="" style="text-align: center;">
+                    <div class="login-or">{% trans 'or' %}</div>
+                    <br>
+                </div>
+                <div class="login_using_other_accounts">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Using external accounts</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% get_providers as socialaccount_providers %}
 
-            <table>
-                {% for field in form.visible_fields %}
-                    <tr>
-                        <td style="text-align: left"><label class="control-label">
-                            {{ field.label }}{% if field.field.required %} *{% endif %}</label></td>
-                        <td style="text-align: right">
-                            <div class="controls">
-                                {{ field }}
-                                {% if field.errors %}
-                                    <span class="help-inline">{{ field.errors.as_text }}</span>{% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
+                            {% if socialaccount_providers %}
+                                <div class="socialaccount_ballot">
+                                    <h4></h4>
+                                    <ul class="socialaccount_providers">
+                                        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                                    </ul>
+                                </div>
+                                {% include "socialaccount/snippets/login_extra.html" %}
+                            {% else %}
+                                <p>{% blocktrans %}If you have not created an account yet, then please
+                                    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+                            {% endif %}
+                        </div>
+                    </div>
 
-            {% for field in form.hidden_fields %}
-                {{ field }}
-            {% endfor %}
+                </div>
 
-            {% block formsets %}
-                {% for formset in inlines %}
-                    {% include "inline_formset.html" with formset=formset %}
-                {% endfor %}
-            {% endblock formsets %}
-            {% if redirect_field_value %}
-                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-            {% endif %}
-
-            <div class="form-actions">
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Submit"/>
-                {% block extra_buttons %}
-                {% endblock extra_buttons %}
             </div>
-            <br/>
-            <a class="button secondaryAction"
-               href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-            <br/>
-        </form>
+
+
+        </div>
     </div>
 {% endblock %}
