@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^redirect_auth/(?P<auth_token>\w+)/$', views.index, name='index'),
 
     url(r'^authenticate/', views.authenticate, name="authenticate"),
+    url(r'^session_logout/', views.session_logout, name="session_logout"),
 )

@@ -33,17 +33,17 @@ paths:
         - api_key: []
       parameters:
         - name: username
-          in: query
+          in: formData
           description: Username
           required: false
           type: string
         - name: password
-          in: query
+          in: formData
           description: Password
           required: false
           type: string
         - name: session_key
-          in: query
+          in: formData
           description: session_key
           required: false
           type: string
