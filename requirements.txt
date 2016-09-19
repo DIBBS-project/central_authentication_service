@@ -2,3 +2,4 @@ django>=1.8.0,<1.9
 djangorestframework
 certifi==2016.8.8
 django-allauth==0.27.0
+common-dibbs
