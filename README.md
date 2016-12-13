@@ -29,7 +29,7 @@ If (B) finds that the user is not authenticated, the user requests is routed to 
 
 Once the User is logged via *all_auth*, he is now authenticated and redirected again to the index view of the CAS service. The [***"authenticated_visitor_index"***](https://github.com/DIBBS-project/central_authentication_service/blob/master/casapp/views.py) section describes what happens next.
 
-If (B) finds that the user is authenticated, the user requests is routed to the ***"authenticated_visitor_index"*** method, which fetches the redirection information associated to the authenticated user. Once one redirection URL is found, 
+If (B) finds that the user is authenticated, the user requests is routed to the [***"authenticated_visitor_index"***](https://github.com/DIBBS-project/central_authentication_service/blob/master/casapp/views.py) method, which fetches the redirection information associated to the authenticated user. Once one redirection URL is found, 
 
 the user is redirected to this URL (on the original service). If not redirection URL could be found, the user is redirected to a simple webpage that displays that he is connected.
 
