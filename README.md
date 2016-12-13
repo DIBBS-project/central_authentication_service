@@ -19,19 +19,23 @@ If it is the case, the user is known by the system, and behaviour (A) will act a
 
 If it is not the case, behaviour (A) will act as described in ***CAS middleware redirect to the CAS service***
 
-#### (2) CAS middleware redirects to the CAS service
+#### (2) CAS middleware redirects to the CAS service and non_authenticated_visitor_index is executed
 
 The CAS middleware redirects the user to the index view of the CAS service and behaviour (B) will be executed. Behaviour (B) basically associates the user's session (on the CAS service) with a redirect URL (in the original service), and a cookie is created on the user's browser to identify the user if the user access the index view for the first time.
 
-##### non_authenticated_visitor_index
-
 If (B) finds that the user is not authenticated, the user requests is routed to the ***"non_authenticated_visitor_index"*** method, which memorizes the user and the page he was trying to reach on the original service. The user is then redirected to a login webpage provided by the *all_auth* plugin.
+
+#### (3) authenticated_visitor_index is executed
 
 Once the User is logged via *all_auth*, he is now authenticated and redirected again to the index view of the CAS service. The ***"authenticated_visitor_index"*** section describes what happens next.
 
-##### authenticated_visitor_index
+If (B) finds that the user is authenticated, the user requests is routed to the ***"authenticated_visitor_index"*** method, which fetches the redirection information associated to the authenticated user. Once one redirection URL is found, 
 
-If (B) finds that the user is authenticated, the user requests is routed to the ***"authenticated_visitor_index"*** method, which fetches the redirection information associated to the authenticated user. Once one redirection URL is found, the user is redirected to this URL (on the original service), and behaviour described in section ***Already identified visitor*** will be executed this time. If not redirection URL could be found, the user is redirected to a simple webpage that displays that he is connected.
+the user is redirected to this URL (on the original service). If not redirection URL could be found, the user is redirected to a simple webpage that displays that he is connected.
+
+#### (4) Redirection to the original service
+
+The user is redirected to the original service and behaviour described in section ***Already identified visitor*** is be executed.
 
 ### Already identified visitor
 
