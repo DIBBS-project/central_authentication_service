@@ -46,9 +46,13 @@ If it is the case, the user is known by the system, and behaviour (A) will act a
 
 If it is not the case, behaviour (A) will act as described in ***CAS middleware redirect to the CAS service***
 
-#### (2) CAS middleware checks with the CAS service if the user's request is genuine
+#### (2) and (3) CAS middleware asks the CAS service if the user's request is genuine
 
-During its request on the Service, the user provided a set of credentials (username/password) or behaviour (A) identified a *"session_key"* attribute in the user's session. In this case, behaviour (A) tries to check with the CAS service if the request is genuine. To do so, (A) calls the [CentralAuthenticationBackend](https://github.com/DIBBS-project/common-dibbs/blob/master/common_dibbs/auth/auth.py).authenticate method : if transmits the some data (credentials or session_key value) to (C), which checks if it corresponding to an existing user. If it is the case, the service serves the user's request, otherwise the user is considered as unknown and the behaviour ***First-time visitor*** is executed.
+During its request on the Service, the user provided a set of credentials (username/password) or behaviour (A) identified a *"session_key"* attribute in the user's session. In this case, behaviour (A) tries to check with the CAS service if the request is genuine. To do so, (A) calls the [CentralAuthenticationBackend](https://github.com/DIBBS-project/common-dibbs/blob/master/common_dibbs/auth/auth.py).authenticate method : it transmits the some data (credentials or session_key value) to (C), which checks if the data corresponds to an existing user and sends its response to the original service.
+
+#### (4) The service get a reply from the CAS service and decides if the user's request is served
+
+Depending of (C)'s response, the service serves the user's request, or considers the user as unknown and implements behaviour described in section ***First-time visitor***.
 
 ## How to integrate the Central Authentication Service with a new DIBBs project?
 
