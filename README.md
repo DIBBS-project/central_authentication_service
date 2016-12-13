@@ -9,7 +9,7 @@ The implementation is based on the [**django-allauth**](https://github.com/penne
 ### First-time visitor
 
 The workflow is illustrated in the following figure:
-[docs/first_time_user.png](docs/first_time_user.png)
+![docs/first_time_user.png](docs/first_time_user.png)
 
 #### (1) A user request is intercepted by CAS middleware
 
@@ -36,7 +36,7 @@ If (B) finds that the user is authenticated, the user requests is routed to the 
 ### Already identified visitor
 
 The workflow is illustrated in the following figure:
-[docs/authenticated_user.png](docs/authenticated_user.png)
+![docs/authenticated_user.png](docs/authenticated_user.png)
 
 #### (1) A user request is intercepted by CAS middleware
 
