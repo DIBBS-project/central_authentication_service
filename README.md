@@ -60,7 +60,7 @@ Depending of (C)'s response, the service serves the user's request, or considers
 
 ## How to integrate the Central Authentication Service with a new DIBBs project?
 
-Add the [CentralAuthenticationMiddleware](https://github.com/DIBBS-project/common-dibbs/blob/master/common_dibbs/auth/auth.py) from the [common_dibbs](https://github.com/DIBBS-project/common-dibbs) project, as in the following example:
+Add the [CentralAuthenticationMiddleware](https://github.com/DIBBS-project/common-dibbs/blob/master/common_dibbs/auth/auth.py) from the [common_dibbs](https://github.com/DIBBS-project/common-dibbs) project to the *settings.py* file, as in the following example:
 
 ```
 MIDDLEWARE_CLASSES = [
