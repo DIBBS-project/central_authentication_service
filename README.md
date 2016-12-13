@@ -23,11 +23,11 @@ If it is not the case, behaviour (A) will act as described in ***CAS middleware 
 
 The CAS middleware redirects the user to the index view of the CAS service and behaviour (B) will be executed. Behaviour (B) basically associates the user's session (on the CAS service) with a redirect URL (in the original service), and a cookie is created on the user's browser to identify the user if the user access the index view for the first time.
 
-If (B) finds that the user is not authenticated, the user requests is routed to the ***"non_authenticated_visitor_index"*** method, which memorizes the user and the page he was trying to reach on the original service. The user is then redirected to a login webpage provided by the *all_auth* plugin.
+If (B) finds that the user is not authenticated, the user requests is routed to the [***"non_authenticated_visitor_index"***](https://github.com/DIBBS-project/central_authentication_service/blob/master/casapp/views.py) method, which memorizes the user and the page he was trying to reach on the original service. The user is then redirected to a login webpage provided by the *all_auth* plugin.
 
 #### (3) authenticated_visitor_index is executed
 
-Once the User is logged via *all_auth*, he is now authenticated and redirected again to the index view of the CAS service. The ***"authenticated_visitor_index"*** section describes what happens next.
+Once the User is logged via *all_auth*, he is now authenticated and redirected again to the index view of the CAS service. The [***"authenticated_visitor_index"***](https://github.com/DIBBS-project/central_authentication_service/blob/master/casapp/views.py) section describes what happens next.
 
 If (B) finds that the user is authenticated, the user requests is routed to the ***"authenticated_visitor_index"*** method, which fetches the redirection information associated to the authenticated user. Once one redirection URL is found, 
 
