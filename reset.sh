@@ -14,6 +14,6 @@ for APP in $APPS; do
 done
 python manage.py migrate
 echo "[RESET] Creating superuser 'admin' with password 'pass'..."
-echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')" | python manage.py shell > /dev/null 2> /dev/null
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')" | python manage.py shell
 echo "[RESET] Creating github social app"
-echo "from allauth.socialaccount.models import SocialApp, Site;site = Site.objects.all()[0];social_app = SocialApp();social_app.save();social_app.provider = '$PROVIDER';social_app.name = 'GitHubSocialApp';social_app.client_id = '$CLIENT_ID';social_app.secret = '$CLIENT_SECRET';social_app.sites = [site];social_app.save()" | python manage.py shell > /dev/null 2> /dev/null
+echo "from allauth.socialaccount.models import SocialApp, Site;site = Site.objects.all()[0];social_app = SocialApp();social_app.save();social_app.provider = '$PROVIDER';social_app.name = 'GitHubSocialApp';social_app.client_id = '$CLIENT_ID';social_app.secret = '$CLIENT_SECRET';social_app.sites = [site];social_app.save()" | python manage.py shell
