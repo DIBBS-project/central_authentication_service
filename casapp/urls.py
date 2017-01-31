@@ -1,11 +1,14 @@
-from django.conf.urls import patterns, url
+# coding: utf-8
+from __future__ import absolute_import, print_function, unicode_literals
 
-from casapp import views
+from django.conf.urls import include, url
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^redirect_auth/(?P<auth_token>\w+)/$', views.index, name='index'),
+from . import views
 
-    url(r'^authenticate/', views.authenticate, name="authenticate"),
-    url(r'^session_logout/', views.session_logout, name="session_logout"),
-)
+router = DefaultRouter()
+router.register(r'tokens', views.TokenViewSet)
+
+urlpatterns = [
+    url(r'^', include(router.urls)),
+]

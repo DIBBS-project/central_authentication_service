@@ -2,8 +2,7 @@
 tmp
 .idea
 db.sqlite3
-rmaapp/migrations
-*.pyc
+casapp/migrations
 
 # MAC OS
 
@@ -49,11 +48,11 @@ __pycache__/
 env/
 build/
 develop-eggs/
-#dist/
+dist/
 downloads/
 eggs/
 .eggs/
-/lib/
+lib/
 lib64/
 parts/
 sdist/
@@ -82,6 +81,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+coverage_html_report/
 
 # Translations
 *.mo
@@ -172,5 +172,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-
