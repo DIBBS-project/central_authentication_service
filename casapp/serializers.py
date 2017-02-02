@@ -8,10 +8,12 @@ from .models import Token
 
 
 class TokenSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Token
-        fields = ('user', 'payload', 'created')
-        read_only_fields = ('payload', 'created')
+        fields = ('username', 'token', 'created')
+        read_only_fields = ('username', 'token', 'created')
 #         extra_kwargs = {
 #             'password': {'write_only': True}
 #         }
