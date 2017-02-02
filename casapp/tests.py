@@ -62,7 +62,7 @@ class TokenAccess(TestCase):
             format='json',
         )
         assert response.status_code == 200
-        data = json.loads(response.content)
+        data = json.loads(response.content.decode('utf-8'))
         assert 'token' in data
 
     def test_invalid_user(self):
@@ -105,7 +105,7 @@ class TokenVerify(TestCase):
             HTTP_DIBBS_AUTHORIZATION=self.token_string,
         )
         assert response.status_code == 200
-        data = json.loads(response.content)
+        data = json.loads(response.content.decode('utf-8'))
         assert 'username' in data
         assert data['username'] == self.alice.username
 
