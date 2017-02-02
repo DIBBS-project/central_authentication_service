@@ -115,3 +115,31 @@ class TokenVerify(TestCase):
             HTTP_DIBBS_AUTHORIZATION=reversed(self.token_string),
         )
         assert response.status_code == 403
+
+
+class TokenRoundTrip(TestCase):
+    def setUp(self):
+        UserModel = get_user_model()
+        self.alice = UserModel.objects.create(username='alice')
+        self.alice.set_password('ALICE')
+        self.alice.save()
+
+        self.client = APIClient()
+
+    def test_round_trip(self):
+        response = self.client.post(
+            '/auth/tokens',
+            {'username': 'alice', 'password': 'ALICE'},
+            format='json',
+        )
+        assert response.status_code == 200
+        data = json.loads(response.content.decode('utf-8'))
+        token = data['token']
+
+        response = self.client.get(
+            '/auth/tokens',
+            HTTP_DIBBS_AUTHORIZATION=token,
+        )
+        assert response.status_code == 200
+        data = json.loads(response.content.decode('utf-8'))
+        assert data['username'] == 'alice'
