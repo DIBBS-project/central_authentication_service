@@ -1,0 +1,28 @@
+# entities
+user: User,
+cas: Central Authentication System,
+s1: Service 1,
+s2: Service 2;
+
+# sequence
+user =>> cas : "auth(username=X, password)";
+cas note cas : "create arbitrary token value for user 'X'";
+cas >> user: "token";
+user =>> s1 : "f()\nauth=token";
+s1 =>> cas : "validate(token)";
+cas >> s1 : "valid=True, username=X";
+s1 box s1 : "get or create user 'X'";
+s1 box s1 : "process request as user 'X'";
+
+--- : "For subservice calls";
+
+cas note s2 : "pre-shared key";
+|||;
+s1 box s1 : "Create signed token encoding user 'X'";
+s1 =>> s2 : "g()\nauth=token";
+s2 box s2 : "Validate token signature,\ndecode user 'X'";
+s2 >> s1 : "result";
+
+---;
+
+s1 >> user : "result";

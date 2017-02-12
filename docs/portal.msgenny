@@ -1,0 +1,27 @@
+# entities
+user: User,
+portal: Portal App,
+cas: Central Authentication System,
+s1: Service 1;
+
+# sequence
+#cas note s1 : "pre-shared key";
+
+---;
+
+user =>> portal : "/login\nusername=X, password";
+portal =>> cas : "auth(username=X, password)";
+cas >> portal: "token";
+
+portal box portal : "get or create user 'X'";
+portal box portal : "store token in database linked to user";
+
+portal >> user : "OK\nsession cookie";
+
+---;
+
+user =>> portal : "f()\nsession cookie";
+portal =>> s1: "f()\ntoken";
+...;
+s1 >> portal : "result";
+portal >> user : "result";

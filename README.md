@@ -6,6 +6,8 @@
 
 ## Authentication Flow
 
+> *See [docs/README.md](docs/README.md)* for some message sequence diagrams
+
 DIBBs services require a token that must be obtained from the CAS. The client is responsible for storing and relaying this token to the services they wish to interact with.
 
 ### Getting the Token
