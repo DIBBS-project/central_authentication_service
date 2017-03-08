@@ -2,22 +2,11 @@
 """
 Test the Django service
 """
-# import argparse
-# import contextlib
-# import errno
 import pathlib
-# import socket
-# import subprocess
 import sys
-# import threading
-# import time
 
 import requests
 
-from common_dibbs.names import AUTHORIZATION_HEADER
-
-# from sham_cas import app as sham_cas
-# from helpers import DjangoRunserverManager, FlaskAppManager
 
 TEST_DIR = pathlib.Path(__file__).resolve().parent
 BASE_DIR = TEST_DIR.parent
@@ -92,6 +81,7 @@ def main(argv=None):
     result = test()
 
     return result
+
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
