@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'central_authentication_service',
     'casapp',
+    # 'chandra.apps.ChandraConfig',
 
     # 'django.contrib.sites',
     # 'allauth',

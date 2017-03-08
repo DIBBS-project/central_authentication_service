@@ -1,4 +1,2 @@
-django>=1.8.0,<1.9
+django>=1.11b1,<2.0
 djangorestframework>=3.5,<3.6
-certifi==2016.8.8
-django-allauth==0.27.0
