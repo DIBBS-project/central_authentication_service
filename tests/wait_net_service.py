@@ -6,10 +6,13 @@ import time
 
 
 def wait_net_service(server, port, timeout=None):
-    """ Wait for network service to appear
-        @param timeout: in seconds, if None or 0 wait forever
-        @return: True of False, if timeout is None may return only True or
-                 throw unhandled network exception
+    """
+    Wait for network service to appear
+    @param timeout: in seconds, if None or 0 wait forever
+    @return: True of False, if timeout is None may return only True or
+             throw unhandled network exception
+
+    Adapted from https://code.activestate.com/recipes/576655/ (MIT)
     """
     address = (server, port)
     if timeout:
