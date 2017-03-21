@@ -2,7 +2,7 @@
 tmp
 .idea
 db.sqlite3
-casapp/migrations
+#casapp/migrations
 
 # MAC OS
 
