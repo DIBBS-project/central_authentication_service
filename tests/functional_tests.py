@@ -13,6 +13,15 @@ BASE_DIR = TEST_DIR.parent
 MANAGE_PY = BASE_DIR / 'manage.py'
 
 
+ROOT = 'http://localhost:7000'
+DA_HEADER = 'Dibbs-Authorization'
+
+TOKEN_ENDPOINT = ROOT + '/auth/tokens'
+SITE_CREDS_ENDPOINT = ROOT + '/credentials'
+
+VALID_TOKEN_HEADER = None
+
+
 def assertStatus(response, expected, message=None):
     try:
         start, stop = expected
@@ -35,13 +44,15 @@ def assertStatus(response, expected, message=None):
 
 
 def test():
-    ROOT = 'http://localhost:7000'
-    TOKEN_ENDPOINT = ROOT + '/auth/tokens'
-
-    DA_HEADER = 'Dibbs-Authorization'
-
     # sanity check
     requests.get(ROOT)
+
+    test_tokens()
+    test_site_creds()
+
+
+def test_tokens():
+    global TOKEN_HEADER
 
     response = requests.post(TOKEN_ENDPOINT, json={
         'username': 'alice',
@@ -56,6 +67,7 @@ def test():
     assertStatus(response, 200)
 
     token = response.json()['token']
+    VALID_TOKEN_HEADER = {DA_HEADER: token}
 
     response = requests.get(TOKEN_ENDPOINT, headers={
         DA_HEADER: token,
@@ -63,9 +75,16 @@ def test():
     assertStatus(response, 200)
 
     response = requests.get(TOKEN_ENDPOINT, headers={
-        DA_HEADER: token[::-1],
+        DA_HEADER: token[::-1], # mangled header
     })
     assertStatus(response, 403)
+
+
+def test_site_creds():
+    response = requests.get(SITE_CREDS_ENDPOINT, headers=VALID_TOKEN_HEADER)
+    assertStatus(response, 200)
+
+
 
 
 def main(argv=None):

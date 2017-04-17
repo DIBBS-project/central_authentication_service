@@ -6,10 +6,10 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-# router = DefaultRouter()
-# router.register(r'tokens', views.TokenViewSet)
+router = DefaultRouter()
+router.register(r'credentials', views.CredentialViewSet)
 
 urlpatterns = [
-    # url(r'^', include(router.urls)),
-    url(r'^tokens', views.TokenView.as_view()),
+    url(r'^auth/tokens', views.TokenView.as_view()),
+    url(r'^', include(router.urls)),
 ]

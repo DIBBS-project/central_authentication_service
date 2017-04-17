@@ -1,16 +1,14 @@
-# coding: utf-8
-from __future__ import absolute_import, print_function, unicode_literals
-
 import json
 import logging
 
 from django.contrib.auth import authenticate
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Token
-from .serializers import TokenSerializer
+from .models import Credential, Token
+from .serializers import CredentialSerializer, TokenSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +16,14 @@ GENERIC_FORBIDDEN = Response(
     {'error': 'invalid credentials'},
     status=status.HTTP_403_FORBIDDEN
 )
+
+
+class CredentialViewSet(viewsets.ModelViewSet):
+    queryset = Credential.objects.all()
+    serializer_class = CredentialSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class TokenView(APIView):
